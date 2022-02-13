@@ -1,22 +1,72 @@
 <template>
   <div 
     class="entry-container mb-3 pointer p-2"
-    @click="$router.push({name: 'entry', params: {id: 10}})"
+    @click="$router.push({name: 'entry', params: {id: entry.id}})"
   >
       <div class="entry-title d-flex">
-          <span class="text-success fs-5 fw-bold">11</span>
-          <span class="mx-1 fs-5">February</span>
-          <span class="mx-2 fw-light">2021, Friday</span>
+          <span class="text-success fs-5 fw-bold"> {{ day }} </span>
+          <span class="mx-1 fs-5"> {{ month }} </span>
+          <span class="mx-2 fw-light"> {{ yearDay }} </span>
       </div>
 
       <div class="entry-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem repudiandae voluptatum deserunt laborum consectetur nobis minima hic architecto sed, aspernatur voluptate libero porro? Consequatur modi sequi iure commodi ex fugiat.
+          {{ textShortened }}
       </div>
   </div>
 </template>
 
 <script>
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+
+const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+
+
+
 export default {
+    props: {
+        entry: {
+            type: Object,
+            required: true
+        }
+    },
+    computed : {
+        textShortened() {
+            return (this.entry.text.length > 130) ? this.entry.text.substring(0, 130) + '...' : this.entry.text;
+        },
+        day() {
+            const date = new Date( this.entry.date )
+            return date.getDate()
+        },
+        month() {
+            const date = new Date ( this.entry.date );
+            return months[ date.getMonth() ];
+        },
+        yearDay() {
+            const date = new Date( this.entry.date );
+            return `${ date.getFullYear() }, ${ days[date.getDay()] }`;
+        },
+    },
 
 }
 </script>

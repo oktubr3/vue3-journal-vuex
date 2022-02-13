@@ -1,4 +1,4 @@
-Vue3 Journal App (vuex)
+## Vue3 Journal App (vuex)
 
 ## Project setup
 ```
